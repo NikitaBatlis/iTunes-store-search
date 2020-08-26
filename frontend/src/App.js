@@ -81,8 +81,6 @@ export default class App extends React.Component {
     const media = e.target.media.value;  //getting the media value
     const api_call = await fetch(`https://itunes.apple.com/search?term=${term}&media=${media}&country=za&limit=50`); //Making the API call with the term/media input varibles, and setting the country to ZA and limit 12.
 
-    console.log(api_call);
-
     if (api_call.status !== 200) { //check if api_call is not successful -> send error.
       this.setState({
         results: [],
@@ -92,8 +90,6 @@ export default class App extends React.Component {
     }
 
     const data = await api_call.json(); //parsing the json data recieved.
-
-    console.log(data);
 
     if (term && media) { //if term/enity both return true/have inputs ->
       if (data.resultCount === 0) { //if nothing is returned -> send error.
