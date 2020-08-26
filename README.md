@@ -1,5 +1,10 @@
-# iTunes Search with React & Express 
+# iTunes Search with React & Express.
+
 A React app that makes HTTP requests to the iTunes store API and to an Express API.
+
+Type in a search and add items to your favourites list.
+
+Deployed here: https://nikitabatlis-itunes-search.herokuapp.com/
 
 ## Installation
 
