@@ -32,13 +32,11 @@ export default class App extends React.Component {
      axios.get('/api/favourites')
     .then(
       (response) => {
-        console.log(response.data);
         this.setState({
           favourites: response.data
         });
       },
       (error) => {
-        console.log(error);
         this.setState({
             error,
             favourites: []
