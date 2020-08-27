@@ -8,7 +8,7 @@ import Col from 'react-bootstrap/Col';
 //Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function SearchResults({results, error, addFavourites, favourites}) {
+export default function SearchResults({results, error, addFavourites, favourites, deleteFavourite}) {
 
     
     function formatKind(kind) { //Function to format the media type string thats returned.
@@ -35,6 +35,14 @@ export default function SearchResults({results, error, addFavourites, favourites
         
     }
 
+    function handleOnClick(result) {
+        if (favourites.some(fav => fav.trackId === result.trackId)) {
+            deleteFavourite(result.trackId);
+        } else {
+            addFavourites(result);
+        }
+    }
+
     return (
         <Container fluid>
 
@@ -54,7 +62,7 @@ export default function SearchResults({results, error, addFavourites, favourites
                             <p className="ResultsMedia">{formatKind(result.kind)}</p>
                         </div>
                         <div className="ResultBtn">                              
-                            <FontAwesomeIcon icon={['fas', 'heart']} size="lg" className="HeartBtn" onClick={() => addFavourites(result)} style={{color: isFavourite(result.trackId)}}/>
+                            <FontAwesomeIcon icon={['fas', 'heart']} size="lg" className="HeartBtn" onClick={() => handleOnClick(result)} style={{color: isFavourite(result.trackId)}}/>
                         </div>
                     </Col>
                 ))}

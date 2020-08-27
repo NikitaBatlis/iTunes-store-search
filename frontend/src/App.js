@@ -66,11 +66,11 @@ export default class App extends React.Component {
   ////DELETE favourite from API array////
   deleteFavourite = (trackId) => {
     axios.delete("/api/favourites", {params: {'track-id': trackId}})
-    .then(res => {
-      const filteredFavourites = this.state.favourites.filter(item =>item.trackId !== trackId);
-      this.setState({favourites: filteredFavourites});
-    })
-    .catch(error => console.log(`Error message: ${error}`));
+      .then(res => {
+        const filteredFavourites = this.state.favourites.filter(item =>item.trackId !== trackId);
+        this.setState({favourites: filteredFavourites});
+      })
+      .catch(error => console.log(`Error message: ${error}`));
   }
 
   ////searchItunes function that will fire when user clicks search button.////
@@ -79,7 +79,7 @@ export default class App extends React.Component {
     e.preventDefault(); //Prevent page reload on form submit.
     const term = e.target.term.value.replace(" ", "+" ).trim().toLowerCase(); //getting the Forms input value and concatinating and trimming.
     const media = e.target.media.value;  //getting the media value
-    const api_call = await fetch(`https://itunes.apple.com/search?term=${term}&media=${media}&country=za&limit=50`); //Making the API call with the term/media input varibles, and setting the country to ZA and limit 12.
+    const api_call = await fetch(`/api/search/${term}/${media}`); //Making the API call with the term/media input varibles, and setting the country to ZA and limit 12.
 
     if (api_call.status !== 200) { //check if api_call is not successful -> send error.
       this.setState({
@@ -127,7 +127,7 @@ export default class App extends React.Component {
                     <h1 className="SearchHeading">Search</h1>
                     <Search searchItunes={this.searchItunes} />
                   </div>
-                  <SearchResults results={this.state.results} error={this.state.error} addFavourites={this.addFavourites} favourites={this.state.favourites} />
+                  <SearchResults results={this.state.results} error={this.state.error} addFavourites={this.addFavourites} favourites={this.state.favourites} deleteFavourite={this.deleteFavourite} />
                 </div>
               </div>
             </Col>

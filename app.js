@@ -1,14 +1,17 @@
 const express = require('express');
 const app = express();
-const fs = require('fs');
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }))
-app.use(bodyParser.json())
-
-//HELMET secutity
+const cors = require('cors');
+const morgan = require('morgan');
 const helmet = require("helmet");
+const fs = require('fs');
+const fetch = require('node-fetch');
+
+app.use(express.urlencoded({extended: true}))
+app.use(express.json())
+app.use(cors())
 app.use(helmet());
+app.use(morgan('dev'));
+
 
 //Set constant PORT variable to listen to port 3000
 const PORT = process.env.PORT || 3001;
@@ -24,6 +27,17 @@ app.get('/api/favourites', (req, res) => {
         res.send(JSON.parse(data));
     })
 });
+
+//GET function that fetches iTunes search.
+app.get('/api/search/:term/:media', (req, res) => {
+    const { term, media } = req.params;
+    console.log(term)
+    console.log(media)
+    fetch(`https://itunes.apple.com/search?term=${term}&media=${media}&country=za&limit=50`) //Making the API call with the term/media input varibles, and setting the country to ZA and limit 12.
+        .then(res => res.json())
+        .then(data => res.send(data))
+        .catch(err => console.log(err))
+})
 
 //POST function to add a new item to array.
 app.post('/api/favourites', (req, res) => {
