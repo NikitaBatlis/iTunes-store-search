@@ -24,6 +24,7 @@ export default class App extends React.Component {
   state = {
     results: [],
     favourites: [],
+    loading: false,
     error: undefined
   };
 
@@ -73,15 +74,18 @@ export default class App extends React.Component {
 
   ////searchItunes function that will fire when user clicks search button.////
   searchItunes = async (e) => { // 'e' is the props past through from the form component when searchItunes function is called.
+    
+    this.setState({ loading: true });
 
     e.preventDefault(); //Prevent page reload on form submit.
     const term = e.target.term.value.replace(" ", "+" ).trim().toLowerCase(); //getting the Forms input value and concatinating and trimming.
     const media = e.target.media.value;  //getting the media value
     const api_call = await fetch(`/api/search/${term}/${media}`); //Making the API call with the term/media input varibles, and setting the country to ZA and limit 12.
 
+
     if (api_call.status !== 200) { //check if api_call is not successful -> send error.
       this.setState({
-        results: [],
+        loading: false,
         error: "Search failed."
       });
       return;    
@@ -92,20 +96,21 @@ export default class App extends React.Component {
     if (term && media) { //if term/enity both return true/have inputs ->
       if (data.resultCount === 0) { //if nothing is returned -> send error.
         this.setState({
-          results: [],
+          loading: false,
           error: "Search did not find anything."
         });
 
       } else { //if inputs match something in database -> setState data.results array to results.
           this.setState({
             results: data.results,
+            loading: false,
             error: ""
           });
       }
       
     } else { //if inputs were empty -> send error.
       this.setState({
-        results: [],
+        loading: false,
         error: "Please enter a search."
       });
     }
@@ -125,7 +130,7 @@ export default class App extends React.Component {
                     <h1 className="SearchHeading">Search</h1>
                     <Search searchItunes={this.searchItunes} />
                   </div>
-                  <SearchResults results={this.state.results} error={this.state.error} addFavourites={this.addFavourites} favourites={this.state.favourites} deleteFavourite={this.deleteFavourite} />
+                  <SearchResults results={this.state.results} error={this.state.error} loading={this.state.loading} addFavourites={this.addFavourites} favourites={this.state.favourites} deleteFavourite={this.deleteFavourite} />
                 </div>
               </div>
             </Col>

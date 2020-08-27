@@ -4,11 +4,12 @@ import React from 'react';
 import Container from 'react-bootstrap/esm/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Spinner from 'react-bootstrap/Spinner'
 
 //Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function SearchResults({results, error, addFavourites, favourites, deleteFavourite}) {
+export default function SearchResults({results, error, loading, addFavourites, favourites, deleteFavourite}) {
 
     
     function formatKind(kind) { //Function to format the media type string thats returned.
@@ -45,10 +46,13 @@ export default function SearchResults({results, error, addFavourites, favourites
 
     return (
         <Container fluid>
+            
+            <div className="LoadingSpinner">
+                {loading && <Spinner animation="border" variant="light" />}
+            </div>
 
-            {
-            error && <p className="ResultError">{error}</p> //boolean to check is error prop came through.
-            }
+            {error && <p className="ResultError">{error}</p>} 
+            
 
             <Row xs={1} md={2} lg={3}>
 
