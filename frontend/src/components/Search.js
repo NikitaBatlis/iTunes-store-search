@@ -1,10 +1,11 @@
 import React from 'react';
+import Spinner from 'react-bootstrap/Spinner'
 
-export default function Search(props) {
+export default function Search({searchItunes, error, loading}) {
     return (
-
+        
         <div className="SearchForm">
-            <form onSubmit={props.searchItunes}>
+            <form onSubmit={searchItunes}>
                 <input type="text" name="term" placeholder="Search titles or artists..."></input>
                 <select name="media">
                     <option value="all">All</option>
@@ -18,6 +19,14 @@ export default function Search(props) {
                 </select>
                 <button>Search</button>
             </form>
+        
+
+        <div className="LoadingSpinner">
+            {loading && <Spinner animation="border" variant="light" />}
+        </div>
+
+        {error && <p className="ResultError">{error}</p>}
+
         </div>
     )
 }

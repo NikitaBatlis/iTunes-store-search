@@ -75,7 +75,7 @@ export default class App extends React.Component {
   ////searchItunes function that will fire when user clicks search button.////
   searchItunes = async (e) => { // 'e' is the props past through from the form component when searchItunes function is called.
     
-    this.setState({ loading: true }); 
+    this.setState({ loading: true, results: [] }); 
 
     e.preventDefault(); //Prevent page reload on form submit.
     const term = e.target.term.value.replace(" ", "+" ).trim().toLowerCase(); //getting the Forms input value and concatinating and trimming.
@@ -129,9 +129,9 @@ export default class App extends React.Component {
                 <div className="SearchContent">
                   <div className="SearchHeader">
                     <h1 className="SearchHeading">Search</h1>
-                    <Search searchItunes={this.searchItunes} />
+                    <Search searchItunes={this.searchItunes} error={this.state.error} loading={this.state.loading}  />
                   </div>
-                  <SearchResults results={this.state.results} error={this.state.error} loading={this.state.loading} addFavourites={this.addFavourites} favourites={this.state.favourites} deleteFavourite={this.deleteFavourite} />
+                  <SearchResults results={this.state.results} addFavourites={this.addFavourites} favourites={this.state.favourites} deleteFavourite={this.deleteFavourite} />
                 </div>
               </div>
             </Col>

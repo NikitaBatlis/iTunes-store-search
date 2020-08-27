@@ -36,6 +36,20 @@ body {
     color: #ffffff7c;
 }
 
+.ResultError {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    line-height: 2;
+    color: #FFFFFF;
+}
+
+.LoadingSpinner {
+    display: grid;
+    place-items: center
+}
+
 /******FAVOURITES********/
 .FavWrapper {
     z-index: 5;
@@ -172,20 +186,6 @@ button:active {
     width: 50%;
     line-height: 1.1;
     margin-left: 1em;
-}
-
-.ResultError {
-    text-align: center;
-    font-size: 30px;
-    font-weight: 300;
-    letter-spacing: 4px;
-    line-height: 2;
-    color: #FFFFFF;
-}
-
-.LoadingSpinner {
-    display: grid;
-    place-items: center
 }
 
 .ResultDetails > p {
