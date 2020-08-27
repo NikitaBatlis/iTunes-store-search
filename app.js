@@ -6,9 +6,9 @@ const helmet = require("helmet");
 const fs = require('fs');
 const fetch = require('node-fetch');
 
-app.use(express.urlencoded({extended: true}))
-app.use(express.json())
-app.use(cors())
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
+app.use(cors());
 app.use(helmet());
 app.use(morgan('dev'));
 
@@ -31,8 +31,6 @@ app.get('/api/favourites', (req, res) => {
 //GET function that fetches iTunes search.
 app.get('/api/search/:term/:media', (req, res) => {
     const { term, media } = req.params;
-    console.log(term)
-    console.log(media)
     fetch(`https://itunes.apple.com/search?term=${term}&media=${media}&country=za&limit=50`) //Making the API call with the term/media input varibles, and setting the country to ZA and limit 12.
         .then(res => res.json())
         .then(data => res.send(data))
