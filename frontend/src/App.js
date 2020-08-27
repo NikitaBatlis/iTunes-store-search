@@ -75,25 +75,26 @@ export default class App extends React.Component {
   ////searchItunes function that will fire when user clicks search button.////
   searchItunes = async (e) => { // 'e' is the props past through from the form component when searchItunes function is called.
     
-    this.setState({ loading: true });
+    this.setState({ loading: true }); 
 
     e.preventDefault(); //Prevent page reload on form submit.
     const term = e.target.term.value.replace(" ", "+" ).trim().toLowerCase(); //getting the Forms input value and concatinating and trimming.
     const media = e.target.media.value;  //getting the media value
-    const api_call = await fetch(`/api/search/${term}/${media}`); //Making the API call with the term/media input varibles, and setting the country to ZA and limit 12.
-
-
-    if (api_call.status !== 200) { //check if api_call is not successful -> send error.
-      this.setState({
-        loading: false,
-        error: "Search failed."
-      });
-      return;    
-    }
-
-    const data = await api_call.json(); //parsing the json data recieved.
 
     if (term && media) { //if term/enity both return true/have inputs ->
+      const api_call = await fetch(`/api/search/${term}/${media}`); //Making the API call with the term/media input varibles, and setting the country to ZA and limit 12.
+
+      if (api_call.status !== 200) { //check if api_call is not successful -> send error.
+        this.setState({
+          loading: false,
+          error: "Search failed."
+        });
+        console.log(api_call.status);
+        return;    
+      }
+
+      const data = await api_call.json(); //parsing the json data recieved.
+
       if (data.resultCount === 0) { //if nothing is returned -> send error.
         this.setState({
           loading: false,
